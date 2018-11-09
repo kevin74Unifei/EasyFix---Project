@@ -94,7 +94,10 @@
                     </div>
                     <br/>
                     <div class="form-group">
-                        <input type="hidden" name="user_perfil" value="Candidato"> 
+                        @if($ent=='func')
+                        <input type="hidden" name="user_perfil" value="Administrador">@endif
+                        @if($ent=='cand')
+                        <input type="hidden" name="user_perfil" value="Candidato">@endif
                     </div>
 
                 </div>

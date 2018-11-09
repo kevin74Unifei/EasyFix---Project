@@ -74,7 +74,7 @@ class CandidatoController extends Controller
         $states = DB::select('select * from estados');//pesquisando estados do Brasil no banco    
         
         if($cand_cod!=null){//Se recebe um parametro, faz o que esta aqui dentro
-            $title="SISSAR Edição Funcionario";
+            $title="EasyFix";
             $dadosCand = $this->cand->where("cand_cod",$cand_cod)->get()->first();   
            
                 $resp= [//guarda dados em um vetor com nomes genericos para ser utilizado pelo components-templates
@@ -118,7 +118,7 @@ class CandidatoController extends Controller
                 ];
             return view('crud-candidato/candidatoForm',compact("title","ent","fieldDateTitle","fieldDate","resp","enabledEdition","states"));
         }else{//Se não tiver parametros retorna um formulario basico de cadastro
-            $title="SISSAR Cadastro Funcionario";
+            $title="EasyFix";
             return view('crud-candidato/candidatoForm',compact("title","ent","fieldDateTitle","fieldDate","states")); 
         }
  

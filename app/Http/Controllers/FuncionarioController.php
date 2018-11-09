@@ -31,7 +31,7 @@ class FuncionarioController extends Controller
     }
     
     public function index(Request $request){        
-        $title="SISSAR Painel Funcionario";        
+        $title="EasyFix";        
 
         $filter = $request->all();//Carregando filtros        
         if($filter){//Se filtros existirem, carrega dados atraves da operação LIKE do sql, em ordem crescente
@@ -72,7 +72,7 @@ class FuncionarioController extends Controller
     public function show($id){
         $dadosFunc = $this->func->where("func_cod",$id)->get()->first();  
         
-        $title = "SISSAR ".$dadosFunc['func_nome'];
+        $title = "EasyFix ".$dadosFunc['func_nome'];
         return view('crud-funcionario/funcionarioView',compact("title","dadosFunc"));     
     }
     
@@ -85,7 +85,7 @@ class FuncionarioController extends Controller
         $states = DB::select('select * from estados');
                 
         if($func_cod!=null){//Se recebe um parametro, faz o que esta aqui dentro
-            $title="SISSAR Edição Funcionario";
+            $title="EasyFix";
             $dadosFuncs = $this->func->where("func_cod",$func_cod)->get();   
             foreach($dadosFuncs as $d){
                 $resp= [//guarda dados em um vetor com nomes genericos para ser utilizado pelo components-templates
@@ -138,7 +138,7 @@ class FuncionarioController extends Controller
                 ];
             return view('crud-funcionario/funcionariosForm',compact("title","ent","fieldDateTitle","fieldDate","resp","enabledEdition","states"));
         }else{//Se não tiver parametros retorna um formulario basico de cadastro
-            $title="SISSAR Cadastro Funcionario";
+            $title="EasyFix";
             return view('crud-funcionario/funcionariosForm',compact("title","ent","fieldDateTitle","fieldDate","states")); 
         }                
     }

@@ -130,7 +130,7 @@
                             <li><a href="{{url('funcionario/list')}}">Listar Funcionario</a></li>                        
                           </ul>
                         </li>
-
+                        <!--
                         <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Empresas Parceiras <span class="caret"></span></a>
                           <ul class="dropdown-menu" role="menu">                        
@@ -160,6 +160,7 @@
                             <li><a href="{{url('entrevista/list')}}">Listar Entrevistas</a></li>                        
                           </ul>
                         </li>
+                        
                     @endif
                     @if(Auth::user()->user_perfil!='Candidato')
                     <li class="dropdown">
@@ -175,6 +176,7 @@
                         <a href="{{url('/rel')}}">Emitir Rel. de Vagas</a>
                     </li>
                     @endif
+                    -->
                     <li>
                         <a href="http://www.google.com">Ajuda</a>
                     </li>

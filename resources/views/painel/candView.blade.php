@@ -31,11 +31,12 @@
      <!--LISTA DE Funcionarios-->
     <table class="table">
         <thead class="thead-inverse">
-            <tr><th><h1>Seus Curriculos</h1></th>
+            <tr><th><h1>Seus Serviços Marcados</h1></th>
                 <th>
-                <a style="float:right;" href="{{url("curriculo/form/")}}{{'/'.Auth::user()->user_vinculo}}" class="btn btn-primary" role="button">
+               <!-- <a style="float:right;" href="{{url("curriculo/form/")}}{{'/'.Auth::user()->user_vinculo}}" class="btn btn-primary" role="button">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right:5px;"></span>Novo Curriculum
-                </a>      
+                </a>
+               -->
             </th></tr>
         </thead>
         <tbody>                
