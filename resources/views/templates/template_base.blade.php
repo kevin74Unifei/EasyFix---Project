@@ -175,8 +175,9 @@
                     <li>
                         <a href="{{url('/rel')}}">Emitir Rel. de Vagas</a>
                     </li>
-                    @endif
                     -->
+                    @endif
+                    
                     <li>
                         <a href="http://www.google.com">Ajuda</a>
                     </li>
