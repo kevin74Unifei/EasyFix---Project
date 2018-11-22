@@ -82,7 +82,7 @@ class ClienteController extends Controller
                     'nome' => $dadosCliente['cliente_nome'],
                     'imagem' => $dadosCliente['cliente_imagem'],
                     'CPF' => $dadosCliente['cliente_CPF'],
-                    'data' => implode("/",array_reverse(explode("-",$dadosCliente['cliente_dataNasc']))),
+                    'data' => Carbon::parse($dadosCliente['cliente_dataNasc']),//implode("/",array_reverse(explode("-",$dadosCliente['cliente_dataNasc']))),
                     'end_cidade' => $dadosCliente['cliente_end_cidade'],
                     'end_estado' => $dadosCliente['cliente_end_estado'],
                     'end_bairro' => $dadosCliente['cliente_end_bairro'],

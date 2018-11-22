@@ -144,3 +144,15 @@ Route::get('/pagamento/show/{id}','PagamentoController@show');
 Route::post('/pagamento/edit/{id}','PagamentoController@edit');
 
 Route::get('/pagamento/delete/{id}','PagamentoController@destroy');
+
+Route::get('/prestador/form/{id?}','PrestadorController@create');
+
+Route::post('/prestador/cadastrar','PrestadorController@store');
+
+Route::get('/prestador/list', 'PrestadorController@index');
+
+Route::get('/prestador/show/{id}','PrestadorController@show');
+
+Route::post('/prestador/edit/{id}','PrestadorController@edit');
+
+Route::get('/prestador/delete/{id}','PrestadorController@destroy');

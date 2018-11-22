@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Candidato;
+use App\Usuario;
 use App\User;
 use App\Curriculo;
 use DB;
@@ -14,7 +14,7 @@ class CandidatoController extends Controller
     private $messages = [//mensagens que serão exibidas quando a validação falhar
             'cand_nome.required' => "É obrigatorio preechimento do campo NOME",
             'cand_nome.min' => "É obrigatorio preechimento do campo NOME com pelo menos 3 letras",
-            'cand_CPF.required' => "É obrigatorio preechimento do campo CPF",         
+            'cand_CPF.required' => "É obrigatorio preechimento do campo CPF",
             'cand_dataNasc.required'=> "É obrigatorio preechimento do campo Data de nascimento",
             'cand_end_cidade.required'=> "É obrigatorio preechimento do campo Cidade",
             'cand_end_estado.required'=> "É obrigatorio preechimento do campo Estado",
@@ -24,7 +24,7 @@ class CandidatoController extends Controller
             'cand_email.required'=>"É obrigatorio preechimento do campo E-mail"
     ];
     
-    public function __construct(Candidato $f){
+    public function __construct(Usuario $f){
         $this->cand=$f;        
     }
     
@@ -33,15 +33,15 @@ class CandidatoController extends Controller
        
         $filter = $request->all();//Carregando filtros        
         if($filter){//Se filtros existirem, carrega dados atraves da operação LIKE do sql, em ordem crescente
-            $dadosCand = $this->cand->where("cand_status",'1')
+            $dadosCand = $this->cand->where("usr_status",'1')
                                 ->where($filter['campo_ent'],'LIKE',$filter['chave_busca'].'%')
-                                ->orderBy('cand_nome', 'asc')
+                                ->orderBy('usr_nome', 'asc')
                                 ->get(); 
             
             $valor_filter_text = $filter['chave_busca'];
             $valor_filter_campo = $filter['campo_ent'];
         }else{//Senão existir filtros carrega todas as linhas da tabela, por ordem crescente.
-            $dadosCand = $this->cand->where("cand_status",'1')->orderBy('cand_nome', 'asc')->get();                                
+            $dadosCand = $this->cand->where("usr_status",'1')->orderBy('usr_nome', 'asc')->get();
         } 
         
         $dadosCandUser = array();//criando um array
@@ -50,12 +50,12 @@ class CandidatoController extends Controller
                     ->where("user_vinculo",$d['cand_cod'])->get()->first();
             
              array_push($dadosCandUser, array(//colocando no final do vetor mais um vetor, assim criando uma matriz
-               "cand_cod" => $d['cand_cod'],
-               "cand_nome" => $d['cand_nome'],
-               "cand_CPF" => $d['cand_CPF'],
-               "cand_imagem" => $d['cand_imagem'],
-               "cand_codUser" => $user['id'],
-               "cand_username" => $user['username'],                
+               "usr_cod" => $d['cand_cod'],
+               "usr_nome" => $d['cand_nome'],
+               "usr_CPF" => $d['cand_CPF'],
+               "usr_imagem" => $d['cand_imagem'],
+               "usr_codUser" => $user['id'],
+               "usr_username" => $user['username'],
             ));
         }
         
@@ -75,7 +75,7 @@ class CandidatoController extends Controller
         
         if($cand_cod!=null){//Se recebe um parametro, faz o que esta aqui dentro
             $title="EasyFix";
-            $dadosCand = $this->cand->where("cand_cod",$cand_cod)->get()->first();   
+            $dadosCand = $this->cand->where("usr_cod",$cand_cod)->get()->first();
            
                 $resp= [//guarda dados em um vetor com nomes genericos para ser utilizado pelo components-templates
                     'cod' => $dadosCand['cand_cod'],
@@ -126,7 +126,7 @@ class CandidatoController extends Controller
     
     public function show($id){
         
-        $dadosCand = $this->cand->where("cand_cod",$id)->get()->first();  
+        $dadosCand = $this->cand->where("usr_cod",$id)->get()->first();
         
         $title = "EasyFix ".$dadosCand['cand_nome'];
         return view('crud-candidato/candidatoView',compact("title","dadosCand"));  
@@ -135,8 +135,8 @@ class CandidatoController extends Controller
     public function store(Request $request){
         $dadosCandadosForm = $request->except('_token');//recebendo dados dos input do formulario
         
-        if($request->hasFile('cand_imagem')){//Se existir imagem faz upload e armazena   
-            $imagem = $request->file('cand_imagem');
+        if($request->hasFile('usr_imagem')){//Se existir imagem faz upload e armazena
+            $imagem = $request->file('usr_imagem');
             $ext=$imagem->getClientOriginalExtension();            
             $filename = md5(time()).".".$ext;//Criando um nome que não será repetido
             $request->cand_imagem->storeAs('public/storage/imgperfil', $filename); 
@@ -167,7 +167,7 @@ class CandidatoController extends Controller
         }
         
         $this->validate($request,$this->cand->rulesEdit,$this->messages);//Chamando validação dos dados de entrada
-        $update = $this->cand->where('cand_cod',$id)->update($dataForm);//alterado a linha selecionada no banco de dados     
+        $update = $this->cand->where('usr_cod',$id)->update($dataForm);//alterado a linha selecionada no banco de dados
               
         if($update)
            return redirect('/'); 
@@ -175,7 +175,7 @@ class CandidatoController extends Controller
     }
     
     public function loadPainel(){
-        $currs = Curriculo::where('cand_cod',Auth::user()->user_vinculo)
+        $currs = Curriculo::where('usr_cod',Auth::user()->user_vinculo)
                 ->where('curr_active','1')
                 ->get();
         
@@ -184,7 +184,7 @@ class CandidatoController extends Controller
     
     public function destroy($id){
         //fazendo a alteração do status da linha do banco de dados 
-        $update = $this->cand->where('cand_cod',$id)->update(["cand_status"=>'0']);
+        $update = $this->cand->where('usr_cod',$id)->update(["usr_status"=>'0']);
         
          if($update)//se feito com sucesso direciona para...
            return redirect('/candidato/list'); 

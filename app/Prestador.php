@@ -11,7 +11,7 @@ class Prestador extends Model {
         'prestador_tipo', 'prestador_representacao', 'prestador_descricao'
     ];
     public $rules = [
-        'prestador_nome' => "required|min:3|max:100",
+        //'prestador_nome' => "required|min:3|max:100",
         'prestador_tipo' => "required",
         'prestador_representacao' => "required",
         'prestador_descricao' => "required"

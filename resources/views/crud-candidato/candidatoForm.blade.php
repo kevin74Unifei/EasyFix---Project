@@ -63,8 +63,7 @@
                 @include('../templates/components/fieldName')
                 <br/>
                 
-                @include('../templates/components/fieldCPF')                      
-                        
+                @include('../templates/components/fieldCPF')
                 @include('../templates/components/fieldDate')
                 @include('../templates/components/fieldSexo')                
 

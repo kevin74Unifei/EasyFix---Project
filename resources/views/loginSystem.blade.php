@@ -58,7 +58,7 @@
             </div><br/>
 
             <button type="submit" class="btn btn-primary" style="position:relative;float:right;top:25px;">Logar</button>        
-            <a href="{{url('candidato/form')}}" >Cadastrar-se</a>
+            <a href="{{url('cliente/form')}}" >Cadastrar-se</a>
         </form>        
     </div>    
     
