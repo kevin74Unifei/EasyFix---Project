@@ -10,7 +10,7 @@
 <style>
     .pagina{position: absolute;
             top:100px;
-            left:20%;        
+            left:20%;
             width:80rem;
             background-color: whitesmoke;
             padding: 4%;
@@ -28,9 +28,9 @@
     .form-group{
         padding-left: 11px;
         padding-top: 10px;
-    }     
+    }
 
-    .buttons{position: relative;  
+    .buttons{position: relative;
              top:30px;
              left:10px;
     }
@@ -48,7 +48,7 @@
 
     <form class="form-inline" method='post' action="
           @if(isset($resp))
-          {{url('usuario/edit/'.$resp['id'])}}    
+          {{url('usuario/edit/'.$resp['id'])}}
           @else
           {{url('usuario/cadastrar')}}
           @endif
@@ -58,7 +58,7 @@
         <input type="hidden" name="user_imagem" value="{{$dadosEnt['imagem'] or ""}}">
 
         <fieldset>
-            <legend>Dados de Usuário:</legend>            
+            <legend>Dados de Usuário:</legend>
             <div>
                 @include('../templates/form/selecaoFunc')
             </div>
@@ -67,10 +67,10 @@
                     <div class="row" >
                         <div class="col-xs-240 col-md-173">
                             <a href="#" class="thumbnail">
-                                <img style="width:173px; height:240px;"  src="{{url('storage/app/public/imgperfil/')."/"}}{{$dadosEnt['imagem'] or 'avatar.png'}}" id="thumb" alt="img_perfil">                    
+                                <img style="width:173px; height:240px;"  src="{{url('storage/app/public/imgperfil/')."/"}}{{$dadosEnt['imagem'] or 'avatar.png'}}" id="thumb" alt="img_perfil">
                             </a>
                         </div>
-                    </div>  
+                    </div>
                 </div>
 
                 <div class="info_pessoal">
@@ -79,18 +79,18 @@
                         <label for="user_login">Nome de Usuário:</label><br/>
                         <input type="username" maxlength="60" size="60" class="form-control" name = "username" required="required" value="{{$resp['username'] or ''}}">
                     </div>
-                    <br/> 
+                    <br/>
                     <div class="form-group">
                         <label for="user_password">Senha:</label><br/>
                         <input type="password" maxlength="24" size="25" class="form-control" required pattern="[a-z]{7-24}" name = "password"
-                               placeholder="Senha" onchange="form.ConfirmaSenha.pattern = this.value;" required="required" 
-                               value="" {{$enabledEdition['userPass'] or ""}}>               
+                               placeholder="Senha" onchange="form.ConfirmaSenha.pattern = this.value;" required="required"
+                               value="" {{$enabledEdition['userPass'] or ""}}>
                     </div>
 
                     <div class="form-group">
                         <label for="ConfimaSenha">Confime a Senha:</label><br/>
                         <input type="password"  maxlength="24" size="25" class="form-control" required pattern="[a-z]{7-24}" name = "ConfirmaSenha" placeholder="Senha" value=""
-                               {{$enabledEdition['userPass'] or ''}}>               
+                               {{$enabledEdition['userPass'] or ''}}>
                     </div>
                     <br/>
                     <div class="form-group">

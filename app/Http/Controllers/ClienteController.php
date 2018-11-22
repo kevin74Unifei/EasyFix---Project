@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Cliente;
@@ -82,7 +83,7 @@ class ClienteController extends Controller
                     'nome' => $dadosCliente['cliente_nome'],
                     'imagem' => $dadosCliente['cliente_imagem'],
                     'CPF' => $dadosCliente['cliente_CPF'],
-                    'data' => Carbon::parse($dadosCliente['cliente_dataNasc']),//implode("/",array_reverse(explode("-",$dadosCliente['cliente_dataNasc']))),
+                    'data' => implode("/",array_reverse(explode("-",$dadosCliente['cliente_dataNasc']))),
                     'end_cidade' => $dadosCliente['cliente_end_cidade'],
                     'end_estado' => $dadosCliente['cliente_end_estado'],
                     'end_bairro' => $dadosCliente['cliente_end_bairro'],
@@ -126,10 +127,10 @@ class ClienteController extends Controller
     
     public function show($id){
         
-        $dadosCliente = $this->cliente->where("cliente_cod",$id)->get()->first();  
+        $dadosCliente = $this->cliente->where("cliente_cod",$id)->get()->first();
         
         $title = "EasyFix".$dadosCliente['cliente_nome'];
-        return view('crud-cliente/clienteView',compact("title","dadosCliente"));  
+        return view('crud-cliente/clienteView',compact("title","dadosCliente"));
     }
     
     public function store(Request $request){
@@ -144,7 +145,8 @@ class ClienteController extends Controller
         }
         
         //mudando padrão de datas..
-        $dadosClienteForm['clinte_dataNasc']= implode("/",array_reverse(explode("/",$dadosClienteForm['cliente_dataNasc'])));
+        //$dadosClienteForm['clinte_dataNasc']= implode("/",array_reverse(explode("/",$dadosClienteForm['cliente_dataNasc'])));
+        $dadosClienteForm['cliente_dataNasc'] = Carbon::parse($dadosClienteForm['cliente_dataNasc'])->format('Y-m-d');
         $this->validate($request,$this->cliente->rules,$this->messages);//Chamando validação dos dados de entrada
         $insert = $this->cliente->create($dadosClienteForm);//cadastrado no banco de dados 
         

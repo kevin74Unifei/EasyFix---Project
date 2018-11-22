@@ -22,18 +22,48 @@ class PrestadorController extends Controller
 
     public function index(Request $request)
     {
-        $title = "EasyFix";
+        $title="EasyFix";
+
+        $filter = $request->all();//Carregando filtros
+        if($filter){//Se filtros existirem, carrega dados atraves da operação LIKE do sql, em ordem crescente
+            $dadosPrestador = $this->prestador->where("prestador_status",'1')
+                ->where($filter['campo_ent'],'LIKE',$filter['chave_busca'].'%')
+                ->orderBy('prestador_nome', 'asc')
+                ->get();
+
+            $valor_filter_text = $filter['chave_busca'];
+            $valor_filter_campo = $filter['campo_ent'];
+        }else{//Senão existir filtros carrega todas as linhas da tabela, por ordem crescente.
+            $dadosPrestador = $this->prestador->where("prestador_status",'1')->orderBy('prestador_nome', 'asc')->get();
+        }
+
+        $dadosPrestadorArray = array();//criando um array
+        foreach($dadosPrestador as $d){
+
+            array_push($dadosPrestadorArray, array(//colocando no final do vetor mais um vetor, assim criando uma matriz
+                "prestador_tipo" => $d['prestador_tipo'],
+                "prestador_representacao" => $d['prestador_representacao'],
+                "prestador_nome" => $d['prestador_nome'],
+                "prestador_cod" => $d['prestador_cod']
+            ));
+        }
+
+        return view("crud-prestador/prestadorList",compact("dadosPrestadorArray",
+            "title",
+            "valor_filter_text",
+            "valor_filter_campo"));
     }
 
-    public function create($prestador_cod = null)
+    public function create($prestador_nome = null)
     {
         $ent = "prestador";
+        $dadosPrestador = $this->prestador->where("prestador_cod", $prestador_nome)->get();
 
-        if ($prestador_cod != null) {//Se recebe um parametro, faz o que esta aqui dentro
+        if (count($dadosPrestador) > 0) {//Se recebe um parametro, faz o que esta aqui dentro
             $title = "EasyFix";
-            $dadosPrestador = $this->prestador->where("prestador_cod", $prestador_cod)->get();
             foreach ($dadosPrestador as $d) {
                 $resp = [//guarda dados em um vetor com nomes genericos para ser utilizado pelo components-templates
+                    'prestador_nome' => $d['prestador_nome'],
                     'prestador_id' => $d['prestador_cod'],
                     'prestador_tipo' => $d['prestador_tipo'],
                     'prestador_representacao' => $d['prestador_representacao'],
@@ -51,16 +81,16 @@ class PrestadorController extends Controller
             $title = "EasyFix";
             $ent = "prestador";
 
-            return view('crud-prestador/PrestadorForm', compact("title", "ent", "dadosEmpresas"));
+            return view('crud-prestador/PrestadorForm', compact("title", "ent", "dadosEmpresas","prestador_nome"));
         }
     }
 
     public function show($id)
     {
-        $dadosCliente = $this->prestador->where("prestador_cod", $id)->get()->first();
+        $dadosprestador = $this->prestador->where("prestador_cod", $id)->get()->first();
 
-        $title = "EasyFix" . $dadosCliente['prestador_nome'];
-        return view('crud-prestador/prestadorView', compact("title", "dadosCliente"));
+        $title = "EasyFix" . $dadosprestador['prestador_nome'];
+        return view('crud-prestador/prestadorView', compact("title", "dadosprestador"));
     }
 
     public function store(Request $request)
@@ -73,7 +103,7 @@ class PrestadorController extends Controller
 
         if ($insert)//se ocorre com sucesso direciona para..
         {
-            return redirect('/usuario/cadastro/prestador/' . $insert['id']);
+            return redirect('/');
         } else return redirect()->back();
     }
 

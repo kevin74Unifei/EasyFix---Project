@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Prestador extends Model {
 
+    public $table='prestador';
+
     protected $fillable = [
         'prestador_nome', 'prestador_vinculo',
-        'prestador_tipo', 'prestador_representacao', 'prestador_descricao'
+        'prestador_tipo', 'prestador_representacao', 'prestador_descricao','prestador_status'
     ];
     public $rules = [
         //'prestador_nome' => "required|min:3|max:100",

@@ -145,7 +145,7 @@ Route::post('/pagamento/edit/{id}','PagamentoController@edit');
 
 Route::get('/pagamento/delete/{id}','PagamentoController@destroy');
 
-Route::get('/prestador/form/{id?}','PrestadorController@create');
+Route::get('/prestador/form/{nome?}','PrestadorController@create');
 
 Route::post('/prestador/cadastrar','PrestadorController@store');
 

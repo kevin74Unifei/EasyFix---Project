@@ -37,8 +37,6 @@
         left:250px;
     }
     </style>
-    
-    </style>
    
     
 <div class="menu">
