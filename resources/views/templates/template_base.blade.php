@@ -134,7 +134,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{url('funcionario/form')}}">Cadastrar Funcionario</a></li>
                             <li><a href="{{url('funcionario/list')}}">Listar Funcionario</a></li>
-                            <li><a href="{{url('prestador/form')}}">Solicitar perfil profissional</a></li>
+
                         </ul>
                     </li>
                 <!--
@@ -167,14 +167,14 @@
                             <li><a href="{{url('entrevista/list')}}">Listar Entrevistas</a></li>                        
                           </ul>
                         </li>
-                        
+
                     @endif
                 @if(Auth::user()->user_perfil!='Candidato')
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Candidatos <span class="caret"></span></a>
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Candidatos<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="{{url('candidato/form')}}">Cadastrar Candidato</a></li>
-                        <li><a href="{{url('candidato/list')}}">Listar Candidatos</a></li>                        
+                        <li><a href="{{url('candidato/list')}}">Listar Candidatos</a></li>
                       </ul>
                     </li>                    
                     @endif
@@ -184,7 +184,7 @@
                     </li>
                     -->
                 @endif
-
+                <li><a href="{{url('prestador/form')}}">Solicitar perfil profissional</a></li>
                 <li>
                     <a href="http://www.google.com">Ajuda</a>
                 </li>

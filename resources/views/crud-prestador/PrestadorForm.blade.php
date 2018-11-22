@@ -66,18 +66,27 @@
                     <div class="form-group">
                         <label>Representação Jurídica:</label><br/>
                         <select class="form-control" id="fieldRepresentacao" required="required"
-                                name="{{$ent or "ent"}}_representacao" {{$enabledEdition['prestador_representacao'] or ""}}>
+                                name="{{$ent or "ent"}}_representacao"
+                                {{$enabledEdition['prestador_representacao'] or ""}}
+                                onselect="function f() {
+                        if(document.getElementById(fieldRepresentacao).innerText == 'CNPJ'){
+
+                        }
+                                }">
                             <option value="CNPJ">CNPJ</option>
                             <option value="MEI">MEI</option>
                         </select>
-                    </div><br/>
+                    </div>
+                    <br/>
                     @include('../templates/components/fieldCNPJ')
                     @include('../templates/components/fieldMEI')
                     <div class="form-group">
                         <label for="prestador_tipo">Profissão:</label><br/>
                         <input type="text" size="103" maxlength="110" class="form-control" name="{{$ent or "ent"}}_tipo"
-                               value="{{$resp['prestador_tipo'] or ""}}"  onkeyup="this.value = this.value.toUpperCase();" {{$enabledEdition['prestador_tipo'] or ""}}>
-                    </div><br/>
+                               value="{{$resp['prestador_tipo'] or ""}}"
+                               onkeyup="this.value = this.value.toUpperCase();" {{$enabledEdition['prestador_tipo'] or ""}}>
+                    </div>
+                    <br/>
                     <div class="form-group">
                         <label for="prestador_descricao">
                             Descrição:
