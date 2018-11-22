@@ -151,14 +151,14 @@ class UserController extends Controller {
 
     public function store(Request $request) {
         $dataForm = $request->except('_token');
-        
+
         $dataForm['password']= Hash::make($dataForm['password']);
         
         $this->validate($request,$this->user->rules,$this->messages);
         $insert = $this->user->create($dataForm);
         
         if($insert)
-           return redirect('/'); 
+           return redirect('/home');
         else return redirect ()->back();
                
     }

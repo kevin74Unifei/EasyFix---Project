@@ -96,8 +96,8 @@
                     <div class="form-group">
                         @if($ent=='func')
                         <input type="hidden" name="user_perfil" value="Administrador">@endif
-                        @if($ent=='cand')
-                        <input type="hidden" name="user_perfil" value="Candidato">@endif
+                        @if($ent=='cliente')
+                        <input type="hidden" name="user_perfil" value="Cliente">@endif
                     </div>
 
                 </div>

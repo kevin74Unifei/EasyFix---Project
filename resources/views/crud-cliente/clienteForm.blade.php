@@ -53,6 +53,7 @@
             @endif
             '>
         <input type="hidden" name="_token" value="{{csrf_token()}}">
+        <input type="hidden" name="cliente_perfil" value="Cliente">
         <fieldset>
             <legend>Informações pessoais:</legend>            
             <div class="img_perfil">

@@ -91,7 +91,7 @@
                     <th colspan="2">
                         <a href="{{url("prestador/show/".$f['prestador_cod'])}}" class="list-group-item"
                            style="height:100px;width:620px;">
-                            <div style="position:relative;top:-92px;left:70px;width:500px;">
+                            <div style="">
                                 <h3>{{$f['prestador_nome']}}</h3>
                                 <label>Representacao: {{$f['prestador_representacao']}}</label><br/>
                             </div>
