@@ -60,59 +60,63 @@ $("#ent_horario").mask("99:99");
             <legend>Informações da entrevista:</legend>            
             <div class="info_pessoal">
                 <div class="form-group">
-                    <label for="ent_entrevistado">Nome do Entrevistado:</label><br/>
-                    <input type="text" size="103" maxlength="110" class="form-control" name="{{$ent or "ent"}}_entrevistado"
-                           value="{{$resp['entrevistado'] or ""}}"  onkeyup="this.value = this.value.toUpperCase();" required="required" {{$enabledEdition['entrevistado'] or ""}}>
+                    <label for="prof_tipo">Tipo do Profissional:</label>
+                    <select class="form-control" name="ent_tipo_prof" {{$enabledEdition['tipo_prof'] or ''}}>
+                      
+                      <option>{{$resp['tipo_prof'] or 'Pedreiro'}}</option>
+                      <option>Pintor</option>
+                      <option>Mecânico</option>
+                      <option>Eletricista</option>
+                      <option>Técnico</option>
+                      <option>Entre outros</option>
+                    </select>
                 </div>
-                <br/>
-                <div class="form-group">
-                    <label for="ent_entrevistador">Nome do Entrevistador:</label><br/>
-                    <input type="text" size="103" maxlength="110" class="form-control" name="{{$ent or "ent"}}_entrevistador"
-                           value="{{$resp['entrevistador'] or ""}}"  onkeyup="this.value = this.value.toUpperCase();" required="required" {{$enabledEdition['entrevistador'] or ""}}>
-                </div>
-                <br/>
-                <div class="form-group">
-                    <label for="ent_empresa">Nome do Empresa:</label><br/>
-                    <input type="text" size="103" maxlength="110" class="form-control" name="{{$ent or "ent"}}_empresa"
-                           value="{{$resp['empresa'] or ""}}"  onkeyup="this.value = this.value.toUpperCase();" required="required" {{$enabledEdition['empresa'] or ""}}>
-                </div>
-                <br/>
-                <div class="form-group">
-                    <label for="ent_horario">Horário:</label><br/>
-                    <input type="text" maxlength="5" size="15" class="form-control"  id ="ent_horario" name="ent_horario"
-                           autocomplete="off" name="{{$ent or "ent"}}_horario" value="{{$resp["horario"] or ""}}" {{$enabledEdition['horario'] or ""}}>                  
-                </div>
-                    <div class="row">
-                        <div class='col-sm-6'>
-                            <div class="form-group">
-                                <label for="ent_data">{{$fieldDateTitle or "data"}}</label><br/>
-                                <div class='input-group date' id='datetimepicker1' >                                    
-                                    <input type='text' class="form-control" required="required" name="ent_data"
-                                           name="{{$ent or "ent"}}_data" value="{{$resp['data'] or ""}}" {{$enabledEdition['data'] or ""}}/>
-                                    <span class="input-group-addon">
-                                        <span class="glyphicon glyphicon-calendar"></span>
-                                    </span>
+                   <div class="row">
+                            <div class='col-sm-6'>
+                                <div class="form-group">
+                                    <label for="func_dataNasc">Data Inicial</label><br/>
+                                    <div class='input-group date' id='datetimepicker1' >                                    
+                                        <input type='text' class="form-control" required="required" name="ent_data_inicial"
+                                               value="{{$resp['data_inicial'] or ''}}"/>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                            <script type="text/javascript">
-                               $(function () {
-                                    $('#datetimepicker1').datetimepicker({
-                                        format:'DD/MM/YYYY', 
-                                        });
-                                     });
-                            </script>
-                </div>
-                
-                 <div class="form-group" style="width: 100%;" >
-                        <label for="ent_obs">Observações:</label><br/>
-                        <textarea name="ent_obs" style="width: 100%;" rows="4" cols="80" class="form-control"
-                                  name="{{$ent or "ent"}}_obs" value="{{$resp["obs"] or ""}}" {{$enabledEdition['obs'] or ""}} ></textarea>
-                </div><br/>
-                
-            </div> 
+                       
+                            <div class='col-sm-6'>
+                                <div class="form-group">
+                                    <label for="func_dataNasc">Data final</label><br/>
+                                    <div class='input-group date' id='datetimepicker2' >                                    
+                                        <input type='text' class="form-control" required="required" name="ent_data_final"
+                                               value="{{$resp['data_final'] or ''}}"/>
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                       
+                                <script type="text/javascript">
+                                   $(function () {
+                                        $('#datetimepicker1').datetimepicker({
+                                            format:'DD/MM/YYYY', 
+                                            });
+                                    });
+                                    
+                                    $(function () {
+                                        $('#datetimepicker2').datetimepicker({
+                                            format:'DD/MM/YYYY', 
+                                            });
+                                    });
+                                         
+                                </script>
+                   </div>
+                <br/>                
+            </div>  
         </fieldset>
-        @include('../templates/form/areaEndereco')
+        
         @include('../templates/form/areaBotao') 
         <br/> 
 </div>

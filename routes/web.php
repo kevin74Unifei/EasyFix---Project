@@ -120,17 +120,16 @@ Route::get('/curriculo/delete/{id}', 'CurriculoController@destroy');
 
 
 
-Route::get('/entrevista/form/{id?}', 'EntrevistaController@create');
+Route::get('/servico/form/{id?}', 'EntrevistaController@create');
 
-Route::post('/entrevista/cadastrar','EntrevistaController@store');
+Route::post('/servico/cadastrar','EntrevistaController@store');
 
-Route::get('/entrevista/list', 'EntrevistaController@index');
+Route::get('/servico/list', 'EntrevistaController@index');
 
-Route::get('/entrevista/show/{id}','EntrevistaController@show');
 
-Route::post('/entrevista/edit/{id}','EntrevistaController@edit');
+Route::post('/servico/edit/{id}','EntrevistaController@edit');
 
-Route::get('/entrevista/delete/{id}','EntrevistaController@destroy');
+Route::get('/servico/delete/{id}','EntrevistaController@destroy');
 
 
 Route::get('/pagamento/form/{id?}', 'PagamentoController@create');
