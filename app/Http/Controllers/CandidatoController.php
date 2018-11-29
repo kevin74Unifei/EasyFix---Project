@@ -139,7 +139,7 @@ class CandidatoController extends Controller
             $imagem = $request->file('usr_imagem');
             $ext=$imagem->getClientOriginalExtension();            
             $filename = md5(time()).".".$ext;//Criando um nome que não será repetido
-            $request->cand_imagem->storeAs('public/storage/imgperfil', $filename); 
+            $request->cand_imagem->storeAs('/imgperfil', $filename); 
             $dadosCandadosForm['cand_imagem'] = $filename;
         }
         

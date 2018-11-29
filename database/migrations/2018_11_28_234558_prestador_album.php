@@ -16,7 +16,9 @@ class PrestadorAlbum extends Migration
         Schema::create('prestador_album', function (Blueprint $table) {
             $table->increments('album_id')->unsigned();
             $table->integer('prestador_id')->unsigned();
-            $table->string('img_path');
+            $table->string('path');
+            $table->string('title');
+            $table->string('descr')->nullable();
             $table->timestamps();
         });
     }

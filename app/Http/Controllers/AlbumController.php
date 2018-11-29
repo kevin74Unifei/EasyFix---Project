@@ -23,14 +23,19 @@ class AlbumController extends Controller
         $this->album = $a;
     }
 
-    public function index(Request $request)
+    public function index()
     {
-return view('crud-album/AlbumList');
+        $idUser = Auth::user()->getAuthIdentifier();
+        $dadosAlbumArray = $this->album->where('prestador_id',$idUser)->get();
+                
+        return view('crud-album/AlbumList')->with('dadosAlbumArray',$dadosAlbumArray);
     }
 
     public function create()
     {
-return view('crud-album/AlbumForm');
+        $idUser = Auth::user()->getAuthIdentifier();
+
+        return view('crud-album/AlbumForm')->with('idUser',$idUser);
     }
 
     public function show($id)
@@ -39,8 +44,26 @@ return view('crud-album/AlbumForm');
     }
 
     public function store(Request $request)
-    {
+    {        
+        $this->validate($request,$this->album->rules,$this->messages);//Chamando validação dos dados de entrada
+        
+        $dadosClienteForm = $request->except('_token');//recebendo dados dos input do formulario
+        
+        if($request->hasFile('path')){//Se existir imagem faz upload e armazena   
+            $imagem = $request->file('path');
+            $ext=$imagem->getClientOriginalExtension();            
+            $filename = md5(time()).".".$ext;//Criando um nome que não será repetido
+            $request->path->storeAs('/album/', $filename); 
+            $dadosClienteForm['path'] = $filename;
+        }
 
+        $insert = $this->album->create($dadosClienteForm);//cadastrado no banco de dados 
+        
+        if($insert)//se ocorre com sucesso direciona para..
+        {
+           return redirect('/album/list'); 
+        }
+        else return redirect ()->back();
     }
 
     public function edit($id, Request $request)
@@ -48,13 +71,13 @@ return view('crud-album/AlbumForm');
 
     }
 
-    public function loadPainel()
-    {
-
-    }
-
     public function destroy($id)
     {
-
+        $delete = $this->album->find($id)->delete();
+        if($delete)//se ocorre com sucesso direciona para..
+        {
+           return redirect('/album/list'); 
+        }
+        else return redirect ()->back();
     }
 }

@@ -57,18 +57,33 @@
         @endif
                 '>
             <input type="hidden" name="_token" value="{{csrf_token()}}">
+            <input type="hidden" name="prestador_id" value="{{$idUser}}">
             <fieldset>
                 <legend>Imagem:</legend>
 
-                <div class="info_pessoal">
-
+                <div class="info_pessoal">                    
                     <div class="form-group">
-                        <input type="file" accept="image/*">
+                        <label for="title">Nome:</label><br/>
+                        <input type="text" size="103" maxlength="110" class="form-control" name="title"
+                               value=""  onkeyup="this.value = this.value.toUpperCase();" required="required">
+                    </div><br/>
+                    
+                    <div class="form-group">
+                        <input type="file" name='path' accept="image/*">
+                    </div><br/><br/>
+                    <div class="form-group">
+                        <label>Descrição:</label><br/>
+                        <textarea  name='descr' cols="103">                      
+                        </textarea>
+                    </div><br/> 
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Salvar</button>
                     </div>
+                </div>                
             </fieldset>
-            <br/>
-            <button type="submit" class="btn btn-success">Salvar</button>
+            
+            
 
-
+        </form>
     </div>
 @endsection

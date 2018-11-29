@@ -158,6 +158,12 @@ Route::post('/prestador/edit/{id}','PrestadorController@edit');
 
 Route::get('/prestador/delete/{id}','PrestadorController@destroy');
 
+
+
 Route::any('/album/form/{id?}','AlbumController@create');
 
+Route::post('/album/cadastrar','AlbumController@store');
+
 Route::get('/album/list', 'AlbumController@index');
+
+Route::get('/album/delete/{id}', 'AlbumController@destroy');
