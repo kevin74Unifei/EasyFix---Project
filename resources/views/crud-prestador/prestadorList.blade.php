@@ -87,18 +87,19 @@
             </thead>
             <tbody>
             @foreach($dadosPrestadorArray as $f)
+
                 <tr>
                     <th colspan="2">
-                        <a href="{{url("prestador/show/".$f['prestador_cod'])}}" class="list-group-item"
+                        <a href="{{url("prestador/show/".$f['prestador_id'])}}" class="list-group-item"
                            style="height:100px;width:620px;">
                             <div style="">
                                 <h3>{{$f['prestador_nome']}}</h3>
                                 <label>Representacao: {{$f['prestador_representacao']}}</label><br/>
                             </div>
                             <!--Botões de edição e exclusão-->
-                            <a href="{{url("prestador/form/".$f['prestador_cod'])}}" class="buttons_tools">
+                            <a href="{{url("prestador/form/".$f['prestador_id'])}}" class="buttons_tools">
                                 <span class="glyphicon glyphicon-pencil" style="padding:4px;" aria-hidden="true"></span>Editar</a>
-                            <a href="{{url("prestador/delete/".$f['prestador_cod'])}}" class="buttons_tools">
+                            <a href="{{url("prestador/delete/".$f['prestador_id'])}}" class="buttons_tools">
                                 <span class="glyphicon glyphicon-trash" style="padding: 4px;" aria-hidden="true"></span>Excluir</a>
                             <!--Botão de edição de usuario, se tiver opção de editar, se não opção de criar-->
                             {{--@if($f['cliente_codUser']!=null)

@@ -50,9 +50,9 @@ $("#ent_horario").mask("99:99");
     @endif
     <form class="form-inline" method='post' enctype="multipart/form-data" action='
           @if(isset($resp))
-          {{url('entrevista/edit/'.$resp['cod'])}}    
+          {{url('servico/edit/'.$resp['cod'])}}
           @else
-          {{url('entrevista/cadastrar')}}
+          {{url('servico/cadastrar')}}
           @endif
           '>
         <input type="hidden" name="_token" value="{{csrf_token()}}">
