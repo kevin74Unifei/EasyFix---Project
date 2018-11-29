@@ -140,7 +140,7 @@
 
                     <li><a href="{{url('prestador/form')}}">Solicitar perfil profissional</a></li>
                     <li><a href="{{url('calendario/list')}}">Calendário</a></li>
-                    <li><a href="{{url('servico/list')}}">Contratar Serviço</a></li>
+                    <li><a href="{{url('servico/list')}}">Serviços</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cliente<span
                                     class="caret"></span></a>
