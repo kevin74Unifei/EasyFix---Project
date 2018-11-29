@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\EntrevistaController;
 use App\Pagamento;
 use App\Empresa;
 use DB;
@@ -12,83 +13,25 @@ use DB;
 class PagamentoController extends Controller
 {
     private $pag;
+    private $entCtr;
     private $messages = [//mensagens que serão exibidas quando a validação falhar
         
     ];
     
-    public function __construct(Pagamento $f){
+    public function __construct(Pagamento $f, EntrevistaController $ent){
         $this->pag=$f;        
+        $this->entCtr = $ent;
     }
     
     public function index(Request $request){        
-        $title="SISSAR Painel Empresa";        
-       
-        $filter = $request->all();//Carregando filtros        
-        if($filter){//Se filtros existirem, carrega dados atraves da operação LIKE do sql, em ordem crescente
-            
-            $dadosPags = $this->pag->where("pag_active",'1');
-                     
-            if(isset($filter['chave_vlrMin'])){//Add filtro de valor minimo a pesquisa
-                $dadosPags = $dadosPags->where('pag_valorTotal','>=',$filter['chave_vlrMin']);
-            }
-            if(isset($filter['chave_vlrMax'])){//Add filtro de valor maximo a pesquisa
-                $dadosPags = $dadosPags->where('pag_valorTotal','<',$filter['chave_vlrMax']);
-            }
-            if(isset($filter['chave_situacao'])){//Add filtro da situacao de pagamento a pesquisa
-                $dadosPags = $dadosPags->where('pag_situacao',$filter['chave_situacao']);
-            }
-            $dadosPags=$dadosPags->get();                            
-            
-            $dadosPagsEmp = array();//criando um array
-            foreach($dadosPags as $pag){
-                $empre = Empresa::where('emp_cod',$pag['pag_empresa_cod']);
-                $empre = $empre->where('emp_CNPJ','LIKE',$filter['chave_CNPJ']."%")->get()->first();
-              
-                if(isset($empre['emp_CNPJ'])){
-                    array_push($dadosPagsEmp, array(//colocando no final do vetor mais um vetor, assim criando uma matriz
-                          'pag_id' => $pag['pag_id'],                  
-                          'pag_tipoPag' => $pag['pag_tipoPag'], 
-                          'pag_valorTotal' => $pag['pag_valorTotal'],
-                          'pag_situacao' => $pag['pag_situacao'],
-                          "emp_nome" => $empre['emp_nome'],
-                          "emp_CNPJ" => $empre['emp_CNPJ'],            
-                    ));  
-                }
-            }       
-            
-            $val_filters = [
-                'chave_CNPJ'=>$filter['chave_CNPJ'],
-                'chave_vlrMin'=>$filter['chave_vlrMin'],
-                'chave_vlrMax'=>$filter['chave_vlrMax'],
-                'chave_situacao'=>$filter['chave_situacao'],
-            ];
-            
-            
-        }else{//Senão existir filtros carrega todas as linhas da tabela, por ordem crescente.
-            $dadosPags = $this->pag->where("pag_active",'1')->orderBy('created_at', 'asc')->get(); 
-                        
-            $dadosPagsEmp = array();//criando um array
-            foreach($dadosPags as $pag){
-                $empre = Empresa::where('emp_cod',$pag['pag_empresa_cod'])->get()->first();                    
-            
-                array_push($dadosPagsEmp, array(//colocando no final do vetor mais um vetor, assim criando uma matriz
-                  'pag_id' => $pag['pag_id'],                  
-                  'pag_tipoPag' => $pag['pag_tipoPag'], 
-                  'pag_valorTotal' => $pag['pag_valorTotal'],
-                  'pag_situacao' => $pag['pag_situacao'],
-                  "emp_nome" => $empre['emp_nome'],
-                  "emp_CNPJ" => $empre['emp_CNPJ'],            
-               ));
-            }
-        }       
-        
-        return view("crud-pagamento/PagamentoList",compact("dadosPagsEmp",
-                                                                "title",
-                                                                "val_filters"));
+        $title="EasyFix";        
+        $ent = $this->entCtr->getServico();
+        return view("crud-pagamento/PagamentoList",compact("ent",
+                                                                "title"));
     }
     
     public function show($pag_cod){
-        $title="SISSAR Visualização Empresa";            
+        $title="EasyFix";            
         
         $states = DB::select('select * from estados');//pesquisando estados do Brasil no banco
         
@@ -121,7 +64,7 @@ class PagamentoController extends Controller
         $ent ="pag";
                 
         if($pag_id!=null){//Se recebe um parametro, faz o que esta aqui dentro
-            $title="SISSAR Edição Pagamento";
+            $title="EasyFix";
             $dadosPags = $this->pag->where("pag_id",$pag_id)->get();   
             foreach($dadosPags as $d){
                 $resp= [//guarda dados em um vetor com nomes genericos para ser utilizado pelo components-templates
@@ -143,7 +86,7 @@ class PagamentoController extends Controller
                 
             return view('crud-pagamento/PagamentoForm',compact("title","ent","resp","enabledEdition","dadosEmpresas"));
         }else{//Se não tiver parametros retorna um formulario basico de cadastro
-            $title="SISSAR Cadastro Pagamento";
+            $title="EasyFix";
             $ent="pag";
             
             $dadosEmpresas = Empresa::where("emp_status","1")->get();
@@ -201,4 +144,6 @@ class PagamentoController extends Controller
            return redirect('/pagamento/list'); 
         else return redirect ()->back();
     }
+    
+    
 }

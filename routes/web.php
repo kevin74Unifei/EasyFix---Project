@@ -136,7 +136,7 @@ Route::get('/pagamento/form/{id?}', 'PagamentoController@create');
 
 Route::post('/pagamento/cadastrar','PagamentoController@store');
 
-Route::get('/pagamento/list', 'PagamentoController@index');
+Route::get('/calendario/list', 'PagamentoController@index');
 
 Route::get('/pagamento/show/{id}','PagamentoController@show');
 

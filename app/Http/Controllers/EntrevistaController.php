@@ -3,23 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
 use App\Entrevista;
 use DB;
 class EntrevistaController extends Controller
 {
     private $ent;
+    private $userCtr;
     private $messages = [//mensagens que serão exibidas quando a validação falhar
             'ent_data_inicial.required'=>"É obrigatorio preechimento do campo DATA INICIAL",
             'ent_data_final.required'=>"É obrigatorio preechimento do campo DATA FINAL",
             'ent_tipo_prof.required'=>"É obrigatorio preechimento do campo TIPO DE PROFISSIONAL",
         ];
     
-    public function __construct(Entrevista $f){
-        $this->ent=$f;        
+    public function __construct(Entrevista $f, UserController $user){
+        $this->ent=$f;       
+        $this->userCtr = $user;
     }
     
     public function index(Request $request){        
-        $title="SISSAR Painel Entrevista";        
+        $title="EasyFix";        
        
         $filter = $request->all();//Carregando filtros        
         if($filter && $filter['campo_tipo_prof']!= 'Todos'){//Se filtros existirem, carrega dados atraves da operação LIKE do sql, em ordem crescente
@@ -50,14 +53,17 @@ class EntrevistaController extends Controller
         
                 
         if($ent_cod!=null){//Se recebe um parametro, faz o que esta aqui dentro
-            $title="SISSAR Edição Entrevista";
+            $title="EasyFix";
             $dadosEnts = $this->ent->where("ent_cod",$ent_cod)->get();   
             foreach($dadosEnts as $d){
                 $resp= [//guarda dados em um vetor com nomes genericos para ser utilizado pelo components-templates
                     'cod' => $d['ent_cod'],
                     'data_inicial' => implode("/",array_reverse(explode("-",$d['ent_data_inicial']))),
                     'data_final' => implode("/",array_reverse(explode("-",$d['ent_data_final']))),
-                    'tipo_prof' => $d['ent_tipo_prof']                    
+                    'tipo_prof' => $d['ent_tipo_prof'],
+                    'status'=>$d['ent_status'],
+                    'cod_pres'=>$d['ent_cod_pres'],
+                    'cod_clie'=>$d['ent_cod_clie']
                     ];  
                 
                 break;
@@ -71,7 +77,7 @@ class EntrevistaController extends Controller
                 ];
             return view('crud-entrevista/entrevistaForm',compact("title","enti","fieldDate","resp","enabledEdition"));
         }else{//Se não tiver parametros retorna um formulario basico de cadastro
-            $title="SISSAR Cadastro Entrevista";
+            $title="EasyFix";
             return view('crud-entrevista/entrevistaForm',compact("title","enti","fieldDate")); 
         }                
     }
@@ -108,4 +114,8 @@ class EntrevistaController extends Controller
            return redirect('/servico/list'); 
         else return redirect ()->back();
     }    
+    
+    public function getServico(){
+        return $this->ent->get();
+    }
 }
