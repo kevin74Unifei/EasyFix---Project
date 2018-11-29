@@ -111,14 +111,7 @@
         });
     });
 
-    $(document).ready(function () {
-//Chama o evento após selecionar um valor
-        if ($prestOff) {
-            if ($prestOff == true) {
-                $("#prefilPrestador").hide();
-            }
-        }
-    });
+
 </script>
 <div id="wrapper" class='wrapper'><!--Menu de opçãoes-->
     @if(isset(Auth::user()->username))
@@ -139,6 +132,7 @@
                 @if(Auth::user()->user_perfil=='Cliente')
 
                     <li><a href="{{url('prestador/form')}}">Solicitar perfil profissional</a></li>
+                    <li><a href="{{url('album/list')}}">Meu album</a></li>
                     <li><a href="{{url('calendario/list')}}">Calendário</a></li>
                     <li><a href="{{url('servico/list')}}">Serviços</a></li>
                     <li class="dropdown">
@@ -185,6 +179,8 @@
 
                         </ul>
                     </li>
+                    <li><a href="{{url('calendario/list')}}">Calendário</a></li>
+                    <li><a href="{{url('album/list')}}">Meu album</a></li>
                 <!--
                         <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Empresas Parceiras <span class="caret"></span></a>

@@ -28,8 +28,8 @@
         }
 
         .imagem_list {
-            width: 300px;
-            height: 300px;
+            width: 200px;
+            height: 200px;
         }
 
         .buttons_tools {
@@ -91,23 +91,23 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($dadosAlbumArray as $a)  
+            @foreach($dadosAlbumArray as $a)
 
-            <div class="row">
-                <div class="col-md-6">
-                    <img src="{{url('storage/app/album/'.$a['path'])}}"
-                         class="imagem_list">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="{{url('storage/app/album/'.$a['path'])}}"
+                             class="imagem_list">
+                    </div>
+
+                    <div class="col-md-6">
+                        <a class="btn btn-danger" href="{{url('album/delete/'.$a['album_id'])}}">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </a>
+                    </div>
                 </div>
+                <br/>
 
-            <div class="col-md-6">                
-                    <a  class="btn btn-danger" href="{{url('album/delete/'.$a['album_id'])}}">
-                        <i class="glyphicon glyphicon-remove"></i>
-                    </a>                
-            </div>
-            </div>
-            <br/>
-
-            @endforeach   
+            @endforeach
             </tbody>
         </table>
     </div>

@@ -30,28 +30,28 @@
         <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
         <table class="table"> 
             <thead>
-                <tr><th colspan="3"><h4 id="table_title">Informações das Vagas paradas há 3 meses</h4></th></tr>
-                <tr><th>Nome Vaga</th><th>Empresa</th><th>Data Emissão da vaga</th></tr>
+                <tr><th colspan="3"><h4 id="table_title">Informações dos serviços parados há 3 meses</h4></th></tr>
+                <tr><th>Serviço</th><th>Status</th><th>Data Emissão da vaga</th></tr>
             </thead>                
             <tbody>
                 @foreach($vaga3m as $vaga)
                 <tr class="celula_3m">
-                    <td>{{$vaga['vag_nome']}}</td>
-                    <td>{{$vaga['vag_nomeEmpresa']}}</td>
+                    <td>{{$vaga['ent_tipo_prof']}}</td>
+                    <td>{{$vaga['ent_status']}}</td>
                     <td>{{$vaga['created_at']}}</td>
                 </tr>
                 @endforeach
                 @foreach($vaga6m as $vaga)
                 <tr class="celula_6m" style="display:none;" >
-                    <td>{{$vaga['vag_nome']}}</td>
-                    <td>{{$vaga['vag_nomeEmpresa']}}</td>
+                    <td>{{$vaga['ent_tipo_prof']}}</td>
+                    <td>{{$vaga['ent_status']}}</td>
                     <td>{{$vaga['created_at']}}</td>
                 </tr>
                 @endforeach
                 @foreach($vaga1a as $vaga)
                 <tr class="celula_1a" style="display:none;">
-                    <td>{{$vaga['vag_nome']}}</td>
-                    <td>{{$vaga['vag_nomeEmpresa']}}</td>
+                    <td>{{$vaga['ent_tipo_prof']}}</td>
+                    <td>{{$vaga['ent_status']}}</td>
                     <td>{{$vaga['created_at']}}</td>
                 </tr>
                 @endforeach
@@ -87,17 +87,17 @@
             type: 'column'
         },
         title: {
-            text: 'Vagas que não foram ocupadas.'
+            text: 'Serviços que não foram contratados.'
         },
         subtitle: {
-            text: 'Numeros de vagas que permaacem sem preechimento por falta de mão de obra.'
+            text: 'Numeros de serviços que permaacem sem contratação.'
         },
         xAxis: {
             type: 'category'
         },
         yAxis: {
             title: {
-                text: 'Numero de Vagas'
+                text: 'Numero de Serviços'
             }
 
         },
