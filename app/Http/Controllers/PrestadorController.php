@@ -57,10 +57,10 @@ class PrestadorController extends Controller
             "valor_filter_campo"));
     }
 
-    public function create($prestador_nome = null)
+    public function create($prestador_id = null)
     {
         $ent = "prestador";
-        $dadosPrestador = $this->prestador->where("prestador_cod", $prestador_nome)->get();
+        $dadosPrestador = $this->prestador->where("prestador_cod", $prestador_id)->get();
 
         if (count($dadosPrestador) > 0) {//Se recebe um parametro, faz o que esta aqui dentro
             $title = "EasyFix";
@@ -83,8 +83,9 @@ class PrestadorController extends Controller
         } else {//Se não tiver parametros retorna um formulario basico de cadastro
             $title = "EasyFix";
             $ent = "prestador";
+            $resp = '';
 
-            return view('crud-prestador/PrestadorForm', compact("title", "ent", "dadosEmpresas","prestador_nome"));
+            return view('crud-prestador/PrestadorForm', compact("title", "ent", "dadosEmpresas","prestador_nome","resp"));
         }
     }
 

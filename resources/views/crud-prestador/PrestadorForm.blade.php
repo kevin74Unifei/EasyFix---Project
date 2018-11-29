@@ -74,13 +74,13 @@
         @endif
         <form class="form-inline" method='post' enctype="multipart/form-data" action='
             @if(isset($resp))
-        {{url('prestador/edit/'.$resp['cod'])}}
+        {{url('prestador/edit/'.$resp['prestador_id'])}}
         @else
         {{url('prestador/cadastrar')}}
         @endif
                 '>
             <input type="hidden" name="_token" value="{{csrf_token()}}">
-            <input type="hidden" name="prestador_nome" value="{{$prestador_nome}}">
+            <input type="hidden" name="prestador_nome" value="{{$prestador_nome or $resp['prestador_nome']}}">
             <input type="hidden" name="prestador_perfil" value="Prestador">
             <fieldset>
                 <legend>Informações de serviço:</legend>
@@ -116,8 +116,9 @@
                             Descrição:
                         </label><br/>
                         <textarea class="form-control" id="prestador_descricao" required="required"
-                                  name="{{$ent or "ent"}}_descricao" {{$enabledEdition['prestador_descricao'] or ""}}></textarea>
+                                  name="{{$ent or "ent"}}_descricao" {{$enabledEdition['prestador_descricao'] or ""}}>{{$resp['prestador_descricao'] or ''}}</textarea>
                     </div>
+
 
                 </div>
             </fieldset>
