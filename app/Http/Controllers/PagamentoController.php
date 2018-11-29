@@ -24,8 +24,9 @@ class PagamentoController extends Controller
     }
     
     public function index(Request $request){        
-        $title="EasyFix";        
-        $ent = $this->entCtr->getServico();
+        $title="EasyFix";    
+        $cod = Auth::user()->id;
+        $ent = $this->entCtr->getServico($cod);
         return view("crud-pagamento/PagamentoList",compact("ent",
                                                                 "title"));
     }
