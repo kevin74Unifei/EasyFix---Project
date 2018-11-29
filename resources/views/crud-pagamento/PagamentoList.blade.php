@@ -44,8 +44,12 @@ for ($day = 1; $day <= $day_count; $day ++, $str++) {
         $dateI = date('Y-m-d');
         $dataF = $item['ent_data_final'];
         $dateF = date('Y-m-d');
+        $cliente = '<br> Status: '.$item['ent_status'];
+        if($item['ent_status'] == 'Agendado'){
+            $cliente.= '<br>Cliente: '.Auth::user()->username;
+        }
         if($date == $dateI || $date == $dataF){
-            $info .= '<a href="/EasyFix---Project/servico/form/'.$item['ent_cod'].'"> Código: '.$item['ent_cod']. '</a><br>';
+            $info .= '<a href="/EasyFix---Project/servico/form/'.$item['ent_cod'].'"> Código do Serviço: '.$item['ent_cod']. $cliente.'</a><br><br>';
         }
     }
     if ($today == $date) {

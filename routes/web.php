@@ -131,6 +131,8 @@ Route::post('/servico/edit/{id}','EntrevistaController@edit');
 
 Route::get('/servico/delete/{id}','EntrevistaController@destroy');
 
+Route::get('/servico/att/{clie}/{id}','EntrevistaController@att');
+
 
 Route::get('/pagamento/form/{id?}', 'PagamentoController@create');
 

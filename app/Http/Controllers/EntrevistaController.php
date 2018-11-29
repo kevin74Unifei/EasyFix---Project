@@ -115,7 +115,17 @@ class EntrevistaController extends Controller
         else return redirect ()->back();
     }    
     
-    public function getServico(){
-        return $this->ent->get();
+    public function att($clie, $id){//Metodo utilizado para incluir um cliente no serviço
+        $dataForm = $this->ent->where('ent_cod',$id)->first();
+        $dataForm['ent_cod_clie'] = (int)$clie;
+        $dataForm['ent_status'] = 'Agendado';
+        $update = $this->ent->where('ent_cod',$id)->update(['ent_cod_clie'=>(int)$clie, 'ent_status'=>'Agendado']);
+        if($update)
+           return redirect('/servico/list'); 
+        else return redirect ()->back();
+    }
+    
+    public function getServico($cod){
+        return $this->ent->where('ent_cod_pres',$cod)->get();
     }
 }
