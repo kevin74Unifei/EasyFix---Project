@@ -17,7 +17,7 @@ Route::get('/candidatohome','CandidatoController@loadPainel');
 
 Route::get('/clientehome','ClienteController@loadPainel');
 
-Route::get('/rel',"siteController@relVagas" );
+Route::get('/rel/serviços',"siteController@relVagas" );
 
 Route::get('/', function () {
     return view('loginSystem');
@@ -128,6 +128,7 @@ Route::get('/servico/list', 'EntrevistaController@index');
 
 
 Route::post('/servico/edit/{id}','EntrevistaController@edit');
+Route::post('/entrevista/edit/{id}','EntrevistaController@edit');
 
 Route::get('/servico/delete/{id}','EntrevistaController@destroy');
 

@@ -89,7 +89,7 @@
             @if($f['ent_status']!='Agendado')
             <tr>
                 <th>
-                    <a href="{{url("servico/show/".$f['ent_cod'])}}" class="list-group-item" style="height:100px;width:660px;">  
+                    <a href="{{url("servico/form/".$f['ent_cod'])}}" class="list-group-item" style="height:100px;width:660px;">
                         <div style="position:relative;top:-10px;left:10px;width:600px;">                        
                             <h3>{{$f['ent_entrevistado']}}</h3>                         
                             <label>Tipo do Serviço: {{$f['ent_tipo_prof']}}</label><br/>

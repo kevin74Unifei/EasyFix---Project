@@ -97,9 +97,9 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="ent_cod_pres" value="{{Auth::user()->id}}"></input>
-                    <input type="hidden" name="ent_cod_clie" value=""></input>
-                    <input type="hidden" name="ent_status" value="Disponivel"></input>
+                    <input type="hidden" name="ent_cod_pres" value="{{Auth::user()->id}}">
+                    <input type="hidden" name="ent_cod_clie" value="">
+                    <input type="hidden" name="ent_status" value="Disponivel">
 
                     <script type="text/javascript">
                         $(function () {

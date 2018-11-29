@@ -181,6 +181,7 @@
                     </li>
                     <li><a href="{{url('calendario/list')}}">Calendário</a></li>
                     <li><a href="{{url('album/list')}}">Meu album</a></li>
+                    <li><a href="{{url('/rel/serviços')}}">Relatório Serviços</a></li>
                 <!--
                         <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Empresas Parceiras <span class="caret"></span></a>

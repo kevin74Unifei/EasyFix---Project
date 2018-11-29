@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Entrevista;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
-use App\Vaga;
 use DB;
 
 class siteController extends Controller
