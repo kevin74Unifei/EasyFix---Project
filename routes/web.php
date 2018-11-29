@@ -157,3 +157,7 @@ Route::get('/prestador/show/{id}','PrestadorController@show');
 Route::post('/prestador/edit/{id}','PrestadorController@edit');
 
 Route::get('/prestador/delete/{id}','PrestadorController@destroy');
+
+Route::any('/album/form/{id?}','AlbumController@create');
+
+Route::get('/album/list', 'AlbumController@index');

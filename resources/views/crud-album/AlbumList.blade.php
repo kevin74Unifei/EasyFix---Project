@@ -27,6 +27,11 @@
             padding: 10px;
         }
 
+        .imagem_list {
+            width: 300px;
+            height: 300px;
+        }
+
         .buttons_tools {
             position: relative;
             top: -30px;
@@ -44,7 +49,7 @@
     <div class="menu">
 
         <div class="dropdown">
-            <form class="form-inline" id="form_busca" action="{{url('/prestador/list')}}">
+            <form class="form-inline" id="form_busca" action="{{url('/album/list')}}">
                 <label>Filtros:</label><br/>
                 {{--<select name="campo_ent" class="form-control">
                     <option value="cliente_nome"
@@ -77,48 +82,35 @@
         <table class="table">
             <thead class="thead-inverse">
             <tr>
-                <th><h1>Prestadores</h1></th>
+                <th><h1>Imagens:</h1></th>
                 <th>
-                    <a style="float:right;" href="{{url("prestador/form/")}}" class="btn btn-primary" role="button">
+                    <a style="float:right;" href="{{url("album/form/")}}" class="btn btn-primary" role="button">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true" style="margin-right:5px;"></span>Cadastrar
                     </a>
                 </th>
             </tr>
             </thead>
             <tbody>
-            @foreach($dadosPrestadorArray as $f)
+            {{--@foreach($dadosAlbumArray as $a)--}}
 
-                <tr>
-                    <th colspan="2">
-                        <a href="{{url("prestador/show/".$f['prestador_id'])}}" class="list-group-item"
-                           style="height:100px;width:620px;">
-                            <div style="">
-                                <h3>{{$f['prestador_nome']}}</h3>
-                                <label>Representacao: {{$f['prestador_representacao']}}</label><br/>
-                            </div>
-                            <!--Botões de edição e exclusão-->
-                            <a href="{{url("prestador/form/".$f['prestador_id'])}}" class="buttons_tools">
-                                <span class="glyphicon glyphicon-pencil" style="padding:4px;" aria-hidden="true"></span>Editar</a>
-                            <a href="{{url("prestador/delete/".$f['prestador_id'])}}" class="buttons_tools">
-                                <span class="glyphicon glyphicon-trash" style="padding: 4px;" aria-hidden="true"></span>Excluir</a>
-                            <!--Botão de edição de usuario, se tiver opção de editar, se não opção de criar-->
-                            {{--@if($f['cliente_codUser']!=null)
-                                <a href="{{url("usuario/formeditor/".$f['cliente_codUser'])}}"
-                                   class="button_tools_user">
-                                    <span class="glyphicon glyphicon-user" style="padding:4px;"
-                                          aria-hidden="true"></span>Usuario
-                                </a>
-                            @else
-                                <a href="{{url("usuario/cadastro/cliente/".$f['cliente_cod'])}}"
-                                   class="button_tools_user">
-                                    <span class="glyphicon glyphicon-plus" style="padding:4px;"
-                                          aria-hidden="true"></span>Usuario
-                                </a>
-                            @endif--}}
-                        </a>
-                    </th>
-                </tr>
-            @endforeach
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="../storage/app/public/storage/imgperfil/b3a3698431f1a986cec626f783d47c83.png"
+                         class="imagem_list">
+                </div>
+
+            <div class="col-md-6">
+                <form class="form-line" method="post" action="{{url('/album/delete/'.$a['album_id'])}}">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove"></i>
+                    </button>
+                </form>
+
+            </div>
+            </div>
+            <br/>
+
+            {{--@endforeach--}}
             </tbody>
         </table>
     </div>

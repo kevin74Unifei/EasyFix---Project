@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Cliente;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Prestador;
@@ -41,10 +42,12 @@ class PrestadorController extends Controller
         foreach($dadosPrestador as $d){
 
             array_push($dadosPrestadorArray, array(//colocando no final do vetor mais um vetor, assim criando uma matriz
-                "prestador_tipo" => $d['prestador_tipo'],
-                "prestador_representacao" => $d['prestador_representacao'],
-                "prestador_nome" => $d['prestador_nome'],
-                "prestador_cod" => $d['prestador_cod']
+                'prestador_nome' => $d['prestador_nome'],
+                'prestador_id' => $d['prestador_cod'],
+                'cliente_id' => $d['cliente_id'],
+                'prestador_vinculo' => $d['prestador_vinculo'],
+                'prestador_representacao' => $d['prestador_representacao'],
+                'prestador_descricao' => $d['prestador_descricao'],
             ));
         }
 
@@ -54,10 +57,10 @@ class PrestadorController extends Controller
             "valor_filter_campo"));
     }
 
-    public function create($prestador_nome = null)
+    public function create($prestador_id = null)
     {
         $ent = "prestador";
-        $dadosPrestador = $this->prestador->where("prestador_cod", $prestador_nome)->get();
+        $dadosPrestador = $this->prestador->where("prestador_cod", $prestador_id)->get();
 
         if (count($dadosPrestador) > 0) {//Se recebe um parametro, faz o que esta aqui dentro
             $title = "EasyFix";
@@ -65,12 +68,12 @@ class PrestadorController extends Controller
                 $resp = [//guarda dados em um vetor com nomes genericos para ser utilizado pelo components-templates
                     'prestador_nome' => $d['prestador_nome'],
                     'prestador_id' => $d['prestador_cod'],
-                    'prestador_tipo' => $d['prestador_tipo'],
+                    'cliente_id' => $d['cliente_id'],
+                    'prestador_vinculo' => $d['prestador_vinculo'],
                     'prestador_representacao' => $d['prestador_representacao'],
                     'prestador_mei' => $d['prestador_mei'],
                     'prestador_cnpj' => $d['prestador_cnpj'],
                     'prestador_descricao' => $d['prestador_descricao'],
-                    'prestador_tipo' => $d['prestador_tipo']
                 ];
 
                 break;
@@ -80,8 +83,9 @@ class PrestadorController extends Controller
         } else {//Se não tiver parametros retorna um formulario basico de cadastro
             $title = "EasyFix";
             $ent = "prestador";
+            $resp = '';
 
-            return view('crud-prestador/PrestadorForm', compact("title", "ent", "dadosEmpresas","prestador_nome"));
+            return view('crud-prestador/PrestadorForm', compact("title", "ent", "dadosEmpresas","prestador_nome","resp"));
         }
     }
 
@@ -95,15 +99,40 @@ class PrestadorController extends Controller
 
     public function store(Request $request)
     {
-        $dadosPrestadorForm = $request->except('_token');//recebendo dados dos input do formulario
+        $comboBox = $request['prestador_representacao'];
+
+        if($comboBox == 0){
+            $dadosPrestadorForm = $request->except('_token','prestador_mei');//recebendo dados dos input do formulario
+            $representacao = $request['prestador_cnpj'];
+            $vinculo = 'CNPJ';
+        }else {
+            $dadosPrestadorForm = $request->except('_token', 'prestador_cnpj');//recebendo dados dos input do formulario
+            $representacao = $request['prestador_mei'];
+            $vinculo = 'MEI';
+        }
+
+        $cod = Auth::user()->getAuthIdentifier();
+
+        $user =  User::where('id','=',$cod)->get()->first();
+
+        $cliente = Cliente::where('cliente_cod','=',$user['user_vinculo'])->get()->first();
+
+        $dadosPrestadorForm['prestador_nome'] = $cliente['cliente_nome'];
+        $dadosPrestadorForm['cliente_id'] = $cliente['cliente_cod'];
+
+        $dadosStore['prestador_nome'] = $cliente['cliente_nome'];
+        $dadosStore['cliente_id'] =$cliente['cliente_cod'];
+        $dadosStore['prestador_vinculo'] = $vinculo;
+        $dadosStore['prestador_representacao'] = $representacao;
+        $dadosStore['prestador_descricao'] =$dadosPrestadorForm['prestador_descricao'];
 
         //mudando padrão de datas..
         $this->validate($request, $this->prestador->rules, $this->messages);//Chamando validação dos dados de entrada
-        $insert = $this->prestador->create($dadosPrestadorForm);//cadastrado no banco de dados
+        $insert = $this->prestador->create($dadosStore);//cadastrado no banco de dados
 
         if ($insert)//se ocorre com sucesso direciona para..
         {
-            return redirect('/');
+            return redirect('/home')->with('prestOff',true);
         } else return redirect()->back();
     }
 

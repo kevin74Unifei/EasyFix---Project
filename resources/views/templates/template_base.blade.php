@@ -110,6 +110,15 @@
             $('#wrapper').toggleClass('toggled');
         });
     });
+
+    $(document).ready(function () {
+//Chama o evento após selecionar um valor
+        if ($prestOff) {
+            if ($prestOff == true) {
+                $("#prefilPrestador").hide();
+            }
+        }
+    });
 </script>
 <div id="wrapper" class='wrapper'><!--Menu de opçãoes-->
     @if(isset(Auth::user()->username))
@@ -128,6 +137,7 @@
                     </a>
                 </li>
                 @if(Auth::user()->user_perfil=='Cliente')
+
                     <li><a href="{{url('prestador/form')}}">Solicitar perfil profissional</a></li>
                     <li><a href="{{url('calendario/list')}}">Calendário</a></li>
                     <li><a href="{{url('servico/list')}}">Contratar Serviço</a></li>
@@ -136,6 +146,15 @@
                                     class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{url('cliente/list')}}">Listar Clientes</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Serviços <span
+                                    class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{url('servico/form')}}">Cadastrar Serviço</a></li>
+                            <li><a href="{{url('servico/list')}}">Listar Serviço</a></li>
+
                         </ul>
                     </li>
                 @endif
@@ -154,6 +173,15 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{url('funcionario/form')}}">Cadastrar Funcionario</a></li>
                             <li><a href="{{url('funcionario/list')}}">Listar Funcionario</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Serviços <span
+                                    class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{url('servico/form')}}">Cadastrar Serviço</a></li>
+                            <li><a href="{{url('servico/list')}}">Listar Serviço</a></li>
 
                         </ul>
                     </li>

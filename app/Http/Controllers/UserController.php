@@ -66,7 +66,7 @@ class UserController extends Controller {
                     'cpf'=> $dadosCand['cand_CPF'],                    
                 ];
                 
-            }else if($ent=='cliente'){//Se candidato
+            }else if($ent=='cliente'){//Se cliente
                 $u = $this->user->where('user_perfil','Cliente')->where('user_vinculo',$id)->get();
                 if(isset($u['id'])){                   
                     return redirect('/');                   
@@ -152,6 +152,15 @@ class UserController extends Controller {
     public function store(Request $request) {
         $dataForm = $request->except('_token');
 
+        if($request->hasFile('usr_imagem')){//Se existir imagem faz upload e armazena
+            $imagem = $request->file('usr_imagem');
+            $ext=$imagem->getClientOriginalExtension();
+            $filename = md5(time()).".".$ext;//Criando um nome que não será repetido
+            $request->cand_imagem->storeAs('public/storage/imgperfil', $filename);
+            $dataForm['cand_imagem'] = $filename;
+        }
+
+
         $dataForm['password']= Hash::make($dataForm['password']);
         
         $this->validate($request,$this->user->rules,$this->messages);
@@ -195,7 +204,7 @@ class UserController extends Controller {
         $errors = new MessageBag;
         
         if(Auth::attempt($dadosForm, true)){
-            return redirect('/');
+            return redirect('/home');
         }else{   
             $errors = new MessageBag(['login' => 'Username e/ou senha não corresponde!']);
             return redirect()->back()->withErrors($errors);            

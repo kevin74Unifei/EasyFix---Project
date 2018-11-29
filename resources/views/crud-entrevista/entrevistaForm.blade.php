@@ -50,7 +50,7 @@
     @endif
     <form class="form-inline" method='post' enctype="multipart/form-data" action='
           @if(isset($resp))
-          {{url('servico/edit/'.$resp['cod'])}}    
+          {{url('entrevista/edit/'.$resp['cod'])}}    
           @else
           {{url('servico/cadastrar')}}
           @endif
@@ -75,7 +75,7 @@
                     <div class='col-sm-6'>
                         <div class="form-group">
                             <label for="func_dataNasc">Data Inicial</label><br/>
-                            <div class='input-group date' id='datetimepicker1' >                                    
+                            <div class='input-group date' id='datetimepicker1' >
                                 <input type='text' class="form-control" required="required" name="ent_data_inicial"
                                        value="{{$resp['data_inicial'] or ''}}"/>
                                 <span class="input-group-addon">
@@ -88,7 +88,7 @@
                     <div class='col-sm-6'>
                         <div class="form-group">
                             <label for="func_dataNasc">Data final</label><br/>
-                            <div class='input-group date' id='datetimepicker2' >                                    
+                            <div class='input-group date' id='datetimepicker2' >
                                 <input type='text' class="form-control" required="required" name="ent_data_final"
                                        value="{{$resp['data_final'] or ''}}"/>
                                 <span class="input-group-addon">
@@ -100,7 +100,7 @@
                     <input type="hidden" name="ent_cod_pres" value="{{Auth::user()->id}}"></input>
                     <input type="hidden" name="ent_cod_clie" value=""></input>
                     <input type="hidden" name="ent_status" value="Disponivel"></input>
-   
+
                     <script type="text/javascript">
                         $(function () {
                             $('#datetimepicker1').datetimepicker({

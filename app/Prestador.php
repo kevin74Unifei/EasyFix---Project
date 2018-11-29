@@ -9,7 +9,7 @@ class Prestador extends Model {
     public $table='prestador';
 
     protected $fillable = [
-        'prestador_nome', 'prestador_vinculo',
+        'prestador_nome', 'cliente_id', 'prestador_vinculo',
         'prestador_tipo', 'prestador_representacao', 'prestador_descricao','prestador_status'
     ];
     public $rules = [
