@@ -7,109 +7,154 @@
 @endsection
 
 @section('Base')
-    <style>
+
+<?php
+date_default_timezone_set('America/Araguaina');
+
+if (isset($_GET['ym'])) {
+    $ym = $_GET['ym'];
+} else {
+    $ym = date('Y-m');
+}
+$timestamp = strtotime($ym, "-01");
+
+if ($timestamp === false) {
+    $timestamp = time();
+}
+
+$today = date('Y-m-d', time());
+
+$html_title = date('m/Y', $timestamp);
+
+$prev = date('Y-m', mktime(0, 0, 0, date('m', $timestamp) - 1, 1, date('Y', $timestamp)));
+$next = date('Y-m', mktime(0, 0, 0, date('m', $timestamp) + 1, 1, date('Y', $timestamp)));
+
+$day_count = date('t', $timestamp);
+
+$str = date('w', mktime(0, 0, 0, date('m', $timestamp), 1, date('Y', $timestamp)));
+
+$week = '';
+$week .= str_repeat('<td></td>', $str);
+
+for ($day = 1; $day <= $day_count; $day ++, $str++) {
+    $date = $ym . '-' . $day;
+    $info = '';
+    foreach($ent as $key => $item){
+        $dataI = $item['ent_data_inicial'];
+        $dateI = date('Y-m-d');
+        $dataF = $item['ent_data_final'];
+        $dateF = date('Y-m-d');
+        if($date == $dateI || $date == $dataF){
+            $info .= '<a href="/EasyFix---Project/servico/form/'.$item['ent_cod'].'"> Código: '.$item['ent_cod']. '</a><br>';
+        }
+    }
+    if ($today == $date) {
+        $week .= '<td class="today">' . $day . '<br>' . $info;
+    } else {
+        $week .= '<td>' . $day . '<br>' . $info;
+    } $week .= '</td>';
+
+    if ($str % 7 == 6 || $day == $day_count) {
+        if ($day == $day_count) {
+            $week .= str_repeat('<td></td>', 6 - ($str % 7));
+        }
+
+        $weeks[] = '<tr>' . $week . '</tr>';
+        $week = '';
+    }
+}
+?>
+
+
+<style>
+
     .pagina{position: absolute;
-        top:90px;
-        left:300px;        
-        width:760px;
-        background-color: whitesmoke;
-        padding: 4%;
-        padding-top:20px;
-        padding-bottom:100px;
+            top:100px;
+            left:15%;        
+            width:1050en;
+            background-color: whitesmoke;
+            padding: 4%;
+            padding-bottom:100px;
     }
-    .menu{
-        
-        
-        background-color: whitesmoke;
-        padding:10px;
+
+    .info_pessoal{position:relative;
+                  float:right;
     }
-    .buttons_tools{
-        position: relative;
-        top:-30px;
-        left:470px;
+    .img_perfil{
+        padding-left: 4%;
+        float:left;
     }
-    </style>
-   
-<div class="pagina">  
-<div class="menu">
-    <!--FILTER-->
-   
-        <form class="form-inline" id="form_busca" action="{{url('/pagamento/list')}}">
-            <div class="form-group">            
-                <label for="chave_CNPJ">CNPJ:</label><br/>
-                <input type="text" id="chave_CNPJ" name="chave_CNPJ" class="form-control"  
-                       value="{{$val_filters['chave_CNPJ'] or "" }}" >                 
-            </div>
-            
-            <div class="form-group">  
-                <label>Valor Minimo:</label><br/>
-                <input type="text" id="chave_vlrMin" name="chave_vlrMin" size="16" name="chave_salMin" class="form-control"  
-                    value="{{$val_filters['chave_vlrMin'] or "" }}" > 
-            </div>
-            
-            <div class="form-group">
-                <label>Valor Maximo:</label><br/>
-                <input type="text" id="chave_vlrMax" size="16" name="chave_vlrMax" class="form-control"  
-                    value="{{$val_filters['chave_vlrMax'] or "" }}" >
-            </div>
-            <div class="form-group">
-                <label>Situação:</label><br/>
-                <select name="chave_situacao" id="chave_situacao" class="form-control"  >
-                    <option value="" @if(isset($val_filters['chave_situacao']) && $val_filters['chave_situacao']==''){{'selected'}}@endif ></option>
-                    <option value="Aguardando" @if(isset($val_filters['chave_situacao']) && $val_filters['chave_situacao']=='Aguardando'){{'selected'}}@endif >Aguardando</option>
-                    <option value="Efetuado" @if(isset($val_filters['chave_situacao']) && $val_filters['chave_situacao']=='Efetuado'){{'selected'}}@endif >Efetuado</option>
-                    <option value="Estornado" @if(isset($val_filters['chave_situacao']) && $val_filters['chave_situacao']=='Estornado'){{'selected'}}@endif >Estornado</option>                
-                </select>
-            </div>
-            
-        </form>
+
+    .form-group{
+        padding-left: 11px;
+        padding-top: 10px;
+    }     
+
+    .buttons{position: relative;  
+             top:30px;
+             left:10px;
+    }
+
+    th{
+        height: 3em;
+        text-align: center;
+        font-weight: 700;
+    }
+
+    td{
+        height: 10em;
+    }
+
+    .today{
+        background-color: orange;
+    }
+
+    th:nth-of-type(7), td:nth-of-type(7){
+        color: blue;
+    }
+    th:nth-of-type(1), td:nth-of-type(1){
+        color: red;
+    }
+
+    h3{
+        text-align: center;
+    }
     
-<script type="text/javascript">
-    $("#chave_CNPJ").on('change',function(){
-        document.getElementById("form_busca").submit();
-    });
-    $("#chave_vlrMin").on('change',function(){
-        document.getElementById("form_busca").submit();
-    });
-    $("#chave_vlrMax").on('change',function(){
-        document.getElementById("form_busca").submit();
-    });
-    $("#chave_situacao").on('change',function(){
-        document.getElementById("form_busca").submit();
-    });
-</script>
-   
+    h1{
+        text-align: center;
+    }
+
+</style>
+
+<div class="pagina">
+    <h1>Calendário</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <h3>
+                    <a href="?ym={{$prev}}">&lt;</a> 
+                    {{$html_title}}
+                    <a href="?ym={{$next}}">&gt;</a></h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Domingo</th>
+                            <th scope="col">Segunda</th>
+                            <th scope="col">Terça</th>
+                            <th scope="col">Quarta</th>
+                            <th scope="col">Quinta</th>
+                            <th scope="col">Sexta</th>
+                            <th scope="col">Sabado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($weeks as $week)
+                        <?php echo $week; ?>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-    
-<!--LISTA DE Empresas-->
-
-    <table class="table">
-        <thead class="thead-inverse">
-            <tr><th><h1>Pagamentos</h1></th></tr>
-        </thead>
-        <tbody>         
-        @foreach($dadosPagsEmp as $pag)
-        <tr>
-            <th>
-                <a href="{{url("pagamento/form/".$pag['pag_id'])}}" class="list-group-item" style="height:150px;width:620px;">  
-                    <div style="position:relative;width:500px;">                        
-                        <h4>{{$pag['emp_nome'] or ""}}</h4>  
-                        <label>CNPJ: {{$pag['emp_CNPJ']}}</label><br/>        
-                        <label>Valor: {{$pag['pag_valorTotal']}},00 R$</label>    
-                         <label>Em Parcelas: {{$pag['pag_tipoPag']}}</label><br/> 
-                         <label>Situacao: {{$pag['pag_situacao']}}</label><br/>
-                    </div>                     
-                    <a href="{{url("pagamento/form/".$pag['pag_id'])}}" class="buttons_tools">
-                        <span class="glyphicon glyphicon-pencil" style="padding:4px;" aria-hidden="true"></span>Editar</a> 
-                    <a href="{{url("pagamento/delete/".$pag['pag_id'])}}" class="buttons_tools">
-                        <span class="glyphicon glyphicon-trash" style="padding: 4px;" aria-hidden="true"></span>Inativar</a>                   
-                </a>                
-            </th>            
-        </tr>
-        @endforeach
-        </tbody>
-    </table>
-</div>
-@endSection
-
-
+@endsection

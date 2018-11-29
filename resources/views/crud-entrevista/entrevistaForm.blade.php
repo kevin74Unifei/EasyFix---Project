@@ -19,7 +19,7 @@
     }
 
     .info_pessoal{position:relative;
-            float:left;
+                  float:left;
     }
 
     .form-group{
@@ -34,10 +34,10 @@
 
 </style>
 
-<script type="text/javascript">    
-$(function(){
-$("#ent_horario").mask("99:99");
-});
+<script type="text/javascript">
+    $(function () {
+        $("#ent_horario").mask("99:99");
+    });
 </script>
 
 <div class="pagina">
@@ -50,9 +50,9 @@ $("#ent_horario").mask("99:99");
     @endif
     <form class="form-inline" method='post' enctype="multipart/form-data" action='
           @if(isset($resp))
-          {{url('entrevista/edit/'.$resp['cod'])}}    
+          {{url('servico/edit/'.$resp['cod'])}}    
           @else
-          {{url('entrevista/cadastrar')}}
+          {{url('servico/cadastrar')}}
           @endif
           '>
         <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -62,61 +62,64 @@ $("#ent_horario").mask("99:99");
                 <div class="form-group">
                     <label for="prof_tipo">Tipo do Profissional:</label>
                     <select class="form-control" name="ent_tipo_prof" {{$enabledEdition['tipo_prof'] or ''}}>
-                      
-                      <option>{{$resp['tipo_prof'] or 'Pedreiro'}}</option>
-                      <option>Pintor</option>
-                      <option>Mecânico</option>
-                      <option>Eletricista</option>
-                      <option>Técnico</option>
-                      <option>Entre outros</option>
+
+                            <option>{{$resp['tipo_prof'] or 'Pedreiro'}}</option>
+                        <option>Pintor</option>
+                        <option>Mecânico</option>
+                        <option>Eletricista</option>
+                        <option>Técnico</option>
+                        <option>Entre outros</option>
                     </select>
                 </div>
-                   <div class="row">
-                            <div class='col-sm-6'>
-                                <div class="form-group">
-                                    <label for="func_dataNasc">Data Inicial</label><br/>
-                                    <div class='input-group date' id='datetimepicker1' >                                    
-                                        <input type='text' class="form-control" required="required" name="ent_data_inicial"
-                                               value="{{$resp['data_inicial'] or ''}}"/>
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
+                <div class="row">
+                    <div class='col-sm-6'>
+                        <div class="form-group">
+                            <label for="func_dataNasc">Data Inicial</label><br/>
+                            <div class='input-group date' id='datetimepicker1' >                                    
+                                <input type='text' class="form-control" required="required" name="ent_data_inicial"
+                                       value="{{$resp['data_inicial'] or ''}}"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
                             </div>
-                       
-                            <div class='col-sm-6'>
-                                <div class="form-group">
-                                    <label for="func_dataNasc">Data final</label><br/>
-                                    <div class='input-group date' id='datetimepicker2' >                                    
-                                        <input type='text' class="form-control" required="required" name="ent_data_final"
-                                               value="{{$resp['data_final'] or ''}}"/>
-                                        <span class="input-group-addon">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
-                                    </div>
-                                </div>
+                        </div>
+                    </div>
+
+                    <div class='col-sm-6'>
+                        <div class="form-group">
+                            <label for="func_dataNasc">Data final</label><br/>
+                            <div class='input-group date' id='datetimepicker2' >                                    
+                                <input type='text' class="form-control" required="required" name="ent_data_final"
+                                       value="{{$resp['data_final'] or ''}}"/>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
                             </div>
-                       
-                                <script type="text/javascript">
-                                   $(function () {
-                                        $('#datetimepicker1').datetimepicker({
-                                            format:'DD/MM/YYYY', 
-                                            });
-                                    });
-                                    
-                                    $(function () {
-                                        $('#datetimepicker2').datetimepicker({
-                                            format:'DD/MM/YYYY', 
-                                            });
-                                    });
-                                         
-                                </script>
-                   </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="ent_cod_pres" value="{{Auth::user()->id}}"></input>
+                    <input type="hidden" name="ent_cod_clie" value=""></input>
+                    <input type="hidden" name="ent_status" value="Disponivel"></input>
+   
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#datetimepicker1').datetimepicker({
+                                format: 'DD/MM/YYYY',
+                            });
+                        });
+
+                        $(function () {
+                            $('#datetimepicker2').datetimepicker({
+                                format: 'DD/MM/YYYY',
+                            });
+                        });
+
+                    </script>
+                </div>
                 <br/>                
             </div>  
         </fieldset>
-        
+
         @include('../templates/form/areaBotao') 
         <br/> 
 </div>

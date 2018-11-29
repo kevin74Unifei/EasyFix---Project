@@ -13,6 +13,9 @@ class CreateEntrevistasTable extends Migration
             $table->date('ent_data_inicial');     
             $table->date('ent_data_final');
             $table->string('ent_tipo_prof');
+            $table->string('ent_status');
+            $table->integer('ent_cod_pres');
+            $table->integer('ent_cod_clie')->nullable();
             $table->timestamps();          
          });
     }
